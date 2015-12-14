@@ -1,6 +1,8 @@
 package bruno.mobilewarsaw.spring;
 
 import bruno.mobilewarsaw.spring.mobwawers.Mobwawers;
+import com.google.common.io.BaseEncoding;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -12,9 +14,9 @@ import java.util.Random;
 
 import static org.junit.Assert.assertTrue;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
-@WebAppConfiguration
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@SpringApplicationConfiguration(classes = Application.class)
+//@WebAppConfiguration
 public class IntegrationTests {
 
     ServerApi retrofit = new RestAdapter.Builder()
@@ -22,11 +24,17 @@ public class IntegrationTests {
             .build()
             .create(ServerApi.class);
 
-    @Test
-    public void addNewMobwawers() throws Exception {
-        Mobwawers newMobwawers = new Mobwawers("Mobile developer", "dev@mobilewarsaw.pl", "iOs", new Random().nextInt(30));
+    String username = "bruno";
+    String password = "potato";
 
-        boolean response = retrofit.addMobwawers(newMobwawers);
+    @Test
+    @Ignore
+    public void addNewMobwawers() throws Exception {
+        String base64Auth = "Basic " + BaseEncoding.base64().encode(new String(username + ":" + password).getBytes());
+
+        Mobwawers newMobwawers = new Mobwawers("Jan Nowak", "dev@mobilewarsaw.pl", "iOs", 25);
+
+        boolean response = retrofit.addMobwawers(base64Auth, newMobwawers);
         assertTrue("addNewMobwawers() failed", response == true);
     }
 

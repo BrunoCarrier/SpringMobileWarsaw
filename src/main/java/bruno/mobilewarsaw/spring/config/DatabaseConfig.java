@@ -48,8 +48,8 @@ public class DatabaseConfig {
             dataSource.setPreferredTestQuery("select 1");
 
             return dataSource;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
         }
     }
 

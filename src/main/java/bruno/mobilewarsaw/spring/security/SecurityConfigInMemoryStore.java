@@ -21,13 +21,16 @@ public class SecurityConfigInMemoryStore extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
 
         http.authorizeRequests()
-                    .antMatchers(HttpMethod.GET, "/**").authenticated()
-                    .antMatchers(HttpMethod.POST, "/**").authenticated()
-                .and()
-                    .formLogin()
-                .and()
-                    .csrf();
+                .antMatchers("/accountCreationEndpoint").anonymous();
+
+        http.authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/**").authenticated()
+                .antMatchers(HttpMethod.POST, "/**").authenticated();
+
+        http.httpBasic();
+        http.formLogin();
     }
 }
